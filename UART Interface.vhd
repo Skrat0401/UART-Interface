@@ -6,6 +6,7 @@ use IEEE.NUMERIC_STD.ALL;
 entity UART_RX is
     Port ( RxD : in  STD_LOGIC;
            clk : in  STD_LOGIC;
+           TEst : out STD_LOGIC;
               RAZ : in  STD_LOGIC;
            data_out : out  STD_LOGIC_VECTOR (7 downto 0));
 end UART_RX;
