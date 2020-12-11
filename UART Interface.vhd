@@ -13,13 +13,13 @@ end UART_RX;
 
 architecture Behavioral of UART_RX is
 
-    signal tick_UART : STD_LOGIC;                                                       -- Signal "top" passage d'un état à l'autre selon vitesse connexion série
-    signal double_tick_UART : STD_LOGIC;                                                -- Signal précédent, fréquence * 2
-    signal compteur_tick_UART : integer range 0 to 10420;                           -- Compteur pour tick_UART 
-    signal double_compteur_tick_UART : integer range 0 to 5210;                 -- Compteur pour demi-périodes 
-    type state_type is (idle, start, demiStart, b0, b1, b2, b3, b4, b5, b6, b7, stop);  -- Etats de la FSM
-    signal state :state_type := idle;                                                   -- Etat par défaut
-    signal RAZ_tick_UART : STD_LOGIC;                                                   -- RAZ du signal tick_UART;
+    signal tick_UART : STD_LOGIC;                                                      
+    signal double_tick_UART : STD_LOGIC;                                               
+    signal compteur_tick_UART : integer range 0 to 10420;                            
+    signal double_compteur_tick_UART : integer range 0 to 5210;                
+    type state_type is (idle, start, demiStart, b0, b1, b2, b3, b4, b5, b6, b7, stop);  
+    signal state :state_type := idle;                                                  
+    signal RAZ_tick_UART : STD_LOGIC;                                                   
 
 begin
 
@@ -39,7 +39,7 @@ begin
     end if;
 end process;
 
-process(clk, RAZ, state) -- Compteur demi-périodes (double_tick_UART car fréquence double)
+process(clk, RAZ, state) -- Compteur demi-pÃ©riodes (double_tick_UART car frÃ©quence double)
 begin
     if (raz='1') or (state = idle) then
         double_compteur_tick_UART <= 0;
@@ -55,7 +55,7 @@ begin
     end if;
 end process;
 
-fsm:process(clk, RAZ)   -- Machine à état
+fsm:process(clk, RAZ)   -- Machine Ã  Ã©tat
 begin
     if (RAZ = '1') then
         state <= idle;
