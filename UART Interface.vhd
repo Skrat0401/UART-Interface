@@ -23,7 +23,7 @@ architecture Behavioral of UART_RX is
 
 begin
 
-process(clk, RAZ, state, RAZ_tick_UART) -- Compteur classique (tick_UART)
+process(clk, RAZ, state, RAZ_tick_UART) 
 begin
     if (raz='1') or (state = idle) or (RAZ_tick_UART = '1') then
         compteur_tick_UART <= 0;
@@ -39,7 +39,7 @@ begin
     end if;
 end process;
 
-process(clk, RAZ, state) -- Compteur demi-périodes (double_tick_UART car fréquence double)
+process(clk, RAZ, state)
 begin
     if (raz='1') or (state = idle) then
         double_compteur_tick_UART <= 0;
@@ -63,7 +63,7 @@ begin
         RAZ_tick_UART <= '1';
     elsif clk = '1' and clk'event then
         case state is
-            when idle => if RxD = '0' then  -- Si front descendant de RxD et en idle
+            when idle => if RxD = '0' then  
                                 state <= start;
                             RAZ_tick_UART <= '1';
                             end if;
@@ -76,40 +76,40 @@ begin
                                         state <= b0;
                                         RAZ_tick_UART <= '0';
                                     end if;
-                            data_out(0) <= RxD; -- Acquisition bit 0
+                            data_out(0) <= RxD;
             when b0 =>  if tick_UART = '1' then
                                 state <= b1;
                             end if;
-                            data_out(1) <= RxD; -- Acquisition bit 1
+                            data_out(1) <= RxD; 
             when b1 =>  if tick_UART = '1' then
                                 state <= b2;
                             end if;
-                            data_out(2) <= RxD; -- Acquisition bit 2
+                            data_out(2) <= RxD; 
             when b2 =>  if tick_UART = '1' then
                                 state <= b3;
                             end if;
-                            data_out(3) <= RxD; -- Acquisition bit 3
+                            data_out(3) <= RxD; 
             when b3 =>  if tick_UART = '1' then
                                 state <= b4;
                             end if;
-                            data_out(4) <= RxD; -- Acquisition bit 4
+                            data_out(4) <= RxD; 
             when b4 =>  if tick_UART = '1' then
                                 state <= b5;
                             end if;
-                            data_out(5) <= RxD; -- Acquisition bit 5
+                            data_out(5) <= RxD; 
             when b5 =>  if tick_UART = '1' then
                                 state <= b6;
                             end if;
-                            data_out(6) <= RxD; -- Acquisition bit 6
+                            data_out(6) <= RxD; 
             when b6 =>  if tick_UART = '1' then
                                 state <= b7;    
                             end if;
-                            data_out(7) <= RxD; -- Acquisition bit 7
+                            data_out(7) <= RxD; 
             when b7 =>  if tick_UART = '1' then
                                 state <= stop;
                             end if;
             when stop => if tick_UART = '1' then
-                                state <= idle;      -- Renvoi en idle
+                                state <= idle;     
                             end if;
         end case;
     end if;
